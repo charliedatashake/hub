@@ -1,0 +1,6 @@
+# Outils locaux, pas necessaires au site heberge
+hub-portable.html
+build-portable.py
+CONTEXTE.md
+.playwright-mcp/
+.DS_Store
