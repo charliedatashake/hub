@@ -56,7 +56,12 @@
   h1 .dim { color: var(--ink-faint); font-weight: 400; }
   .sub { color: var(--ink-soft); font-size: 15px; max-width: 60ch; }
 
-  .controls { position: sticky; top: 0; z-index: 5; display: flex; gap: 12px; align-items: center; padding: 14px 0; margin: 20px 0 4px; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .controls { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 14px 0; margin: 20px 0 4px; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .tabs { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); }
+  .tab { appearance: none; border: none; background: none; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); padding: 7px 15px; border-radius: 999px; cursor: pointer; transition: color .12s ease, background .12s ease; }
+  .tab:hover { color: var(--ink); }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
   .search { flex: 1 1 auto; max-width: 320px; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--panel); }
   .search input { border: none; background: none; outline: none; width: 100%; color: var(--ink); font-family: var(--sans); font-size: 14px; }
   .search svg { flex: none; color: var(--ink-faint); }
@@ -108,11 +113,16 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
       <input type="search" id="q" placeholder="Rechercher dans mes ressources..." aria-label="Rechercher">
     </label>
+    <div class="tabs" role="tablist" aria-label="Filtrer par univers">
+      <button class="tab" type="button" role="tab" data-scope="all" aria-selected="true">Tout</button>
+      <button class="tab" type="button" role="tab" data-scope="pro" aria-selected="false">Pro</button>
+      <button class="tab" type="button" role="tab" data-scope="perso" aria-selected="false">Perso</button>
+    </div>
     <span class="count" id="count"></span>
   </div>
 
   <main id="board">
-    <section class="cat" data-cat>
+    <section class="cat" data-cat data-scope="pro">
       <div class="sec-head"><h2>Podcasts</h2><span class="rule"></span></div>
       <div class="grid">
         <a class="card" href="https://podcasts.apple.com/fr/podcast/id1698730807" target="_blank" rel="noopener" data-search="mvp paul vengeons antoine veyrieres seo geo"><img class="logo" src="logos/mvp.png" alt="" loading="lazy"><span class="meta"><div class="name">MVP</div><div class="desc">SEO / GEO · Vengeons &amp; Veyrières</div></span></a>
@@ -125,7 +135,7 @@
       </div>
     </section>
 
-    <section class="cat" data-cat>
+    <section class="cat" data-cat data-scope="pro">
       <div class="sec-head"><h2>Vidéos / chaînes</h2><span class="rule"></span></div>
       <div class="grid">
         <a class="card" href="https://www.youtube.com/@LaMaisonDuWeb/videos" target="_blank" rel="noopener" data-search="la maison du web youtube seo web formation"><img class="logo" src="logos/lamaisonduweb.png" alt="" loading="lazy"><span class="meta"><div class="name">La Maison du Web</div><div class="desc">YouTube · SEO / web</div></span></a>
@@ -133,13 +143,24 @@
       </div>
     </section>
 
-    <section class="cat" data-cat>
+    <section class="cat" data-cat data-scope="pro">
       <div class="sec-head"><h2>Experts à suivre</h2><span class="rule"></span></div>
       <div class="grid">
         <a class="card" href="https://www.linkedin.com/in/christophevidal/" target="_blank" rel="noopener" data-search="christophe vidal ecommerce seo semrush prestashop magento linkedin x twitter"><img class="logo" src="logos/cv.png" alt="" loading="lazy"><span class="meta"><div class="name">Christophe Vidal</div><div class="desc">eCommerce SEO · LinkedIn</div></span></a>
         <a class="card" href="https://www.linkedin.com/in/alexisrylko/" target="_blank" rel="noopener" data-search="alexis rylko seo technique iprospect dentsu alekseo google discover linkedin"><span class="ico">AR</span><span class="meta"><div class="name">Alexis Rylko</div><div class="desc">SEO technique · iProspect</div></span></a>
         <a class="card" href="https://www.linkedin.com/in/mathieuchapon/" target="_blank" rel="noopener" data-search="mathieu chapon seo peak ace search foresight formaseo linkedin"><span class="ico">MC</span><span class="meta"><div class="name">Mathieu Chapon</div><div class="desc">SEO · Peak Ace / FormaSEO</div></span></a>
         <a class="card" href="https://www.linkedin.com/in/leo-poitevin/" target="_blank" rel="noopener" data-search="leo poitevin seo netlinking backlinks astrak niches concurrentielles linkedin"><span class="ico">LP</span><span class="meta"><div class="name">Léo Poitevin</div><div class="desc">SEO / netlinking · Astrak</div></span></a>
+      </div>
+    </section>
+
+    <section class="cat" data-cat data-scope="perso">
+      <div class="sec-head"><h2>Perso · chaînes</h2><span class="rule"></span></div>
+      <div class="grid">
+        <a class="card" href="https://www.youtube.com/@Micode/videos" target="_blank" rel="noopener" data-search="micode youtube tech cybersecurite underscore informatique"><img class="logo" src="logos/micode.png" alt="" loading="lazy"><span class="meta"><div class="name">Micode</div><div class="desc">YouTube · tech et cybersécurité</div></span></a>
+        <a class="card" href="https://www.youtube.com/@SirGibsy/videos" target="_blank" rel="noopener" data-search="sir gibsy youtube enquete scandales coulisses web youtubeurs"><img class="logo" src="logos/sirgibsy.png" alt="" loading="lazy"><span class="meta"><div class="name">Sir Gibsy</div><div class="desc">YouTube · coulisses du web</div></span></a>
+        <a class="card" href="https://www.youtube.com/@GaspardG/videos" target="_blank" rel="noopener" data-search="gaspard g youtube societe recits portraits histoire de"><img class="logo" src="logos/gaspardg.png" alt="" loading="lazy"><span class="meta"><div class="name">Gaspard G</div><div class="desc">YouTube · récits et société</div></span></a>
+        <a class="card" href="https://www.youtube.com/@SPuech/videos" target="_blank" rel="noopener" data-search="simon puech youtube reportage enquete investigation societe geopolitique"><img class="logo" src="logos/simonpuech.png" alt="" loading="lazy"><span class="meta"><div class="name">Simon Puech</div><div class="desc">YouTube · reportage et enquête</div></span></a>
+        <a class="card" href="https://www.youtube.com/@28MinutesARTE/videos" target="_blank" rel="noopener" data-search="28 minutes arte youtube debat actualite emission elisabeth quin"><img class="logo" src="logos/arte28.png" alt="" loading="lazy"><span class="meta"><div class="name">28 minutes</div><div class="desc">YouTube · débat d'actualité, ARTE</div></span></a>
       </div>
     </section>
   </main>
@@ -166,12 +187,16 @@
     var empty = document.getElementById('empty');
     var cards = Array.prototype.slice.call(document.querySelectorAll('a.card'));
     var sections = Array.prototype.slice.call(document.querySelectorAll('section.cat'));
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    var scope = 'all';
     function apply() {
       var term = q.value.trim().toLowerCase();
       var visible = 0;
       cards.forEach(function (c) {
+        var sec = c.closest('section.cat');
+        var inScope = scope === 'all' || (sec && sec.getAttribute('data-scope') === scope);
         var hay = (c.getAttribute('data-search') || '') + ' ' + c.textContent.toLowerCase();
-        var show = term === '' || hay.indexOf(term) !== -1;
+        var show = inScope && (term === '' || hay.indexOf(term) !== -1);
         c.style.display = show ? '' : 'none';
         if (show) visible++;
       });
@@ -183,6 +208,16 @@
       empty.classList.toggle('on', visible === 0);
     }
     q.addEventListener('input', apply);
+
+    /* Onglets Tout / Pro / Perso */
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        scope = t.getAttribute('data-scope');
+        tabs.forEach(function (o) { o.setAttribute('aria-selected', o === t ? 'true' : 'false'); });
+        apply();
+      });
+    });
+
     apply();
 
     /* Mini-lecteur : les cartes Apple Podcasts s'ouvrent dans le player en bas */
